@@ -14,7 +14,7 @@
 			components: [
 				{
 					type: 'svx',
-					name: 'Home',
+					name: 'App',
 					source: code_1,
 				},
 				{
