@@ -39,12 +39,11 @@
 }
 
 body {
-	--font: "Overpass", sans-serif;
-	--font-mono: "Fira Mono", monospace;
+	--font: 'Overpass', sans-serif;
+	--font-mono: 'Fira Mono', monospace;
 	--font-ui: var(--font-mono);
-	--font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-
+	--font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
 html {
@@ -63,7 +62,7 @@ body,
 }
 
 #sapper {
-	max-width: 110rem;
+	/* max-width: 110rem; */
 	margin: auto;
 }
 
@@ -306,7 +305,7 @@ a.no-underline {
 }
 
 .listify ul > li:before {
-	content: "";
+	content: '';
 	position: absolute;
 	margin-top: 1.1rem;
 	margin-left: -1.8rem;
@@ -439,7 +438,7 @@ figcaption,
 	background-color: var(--flash) !important;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
 	position: relative;
 	height: 1em;
 	width: calc(100% - 0.6em);
@@ -451,8 +450,8 @@ input[type="checkbox"] {
 	margin: 0 0.6em 0 0;
 }
 
-input[type="checkbox"]::before {
-	content: "";
+input[type='checkbox']::before {
+	content: '';
 	position: absolute;
 	display: block;
 	height: 100%;
@@ -465,12 +464,12 @@ input[type="checkbox"]::before {
 	box-sizing: content-box;
 }
 
-input[type="checkbox"]:checked::before {
+input[type='checkbox']:checked::before {
 	background: var(--prime);
 }
 
-input[type="checkbox"]::after {
-	content: "";
+input[type='checkbox']::after {
+	content: '';
 	position: absolute;
 	display: block;
 	height: 1em;
@@ -483,89 +482,89 @@ input[type="checkbox"]::after {
 	-webkit-transition: background 0.2s ease-out, left 0.2s ease-out;
 }
 
-input[type="checkbox"]:checked::after {
+input[type='checkbox']:checked::after {
 	left: calc(100% - 9px);
 }
 
 @font-face {
-	font-family: "roboto-thin-sub";
-	src: url("/fonts/roboto-thin-webfont.woff2") format("woff2");
+	font-family: 'roboto-thin-sub';
+	src: url('/fonts/roboto-thin-webfont.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "roboto-sub";
-	src: url("/fonts/roboto-thin-webfont.woff2") format("woff2");
+	font-family: 'roboto-sub';
+	src: url('/fonts/roboto-thin-webfont.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "cat-sub";
-	src: url("/fonts/catamaran-light-webfont.woff2") format("woff2");
+	font-family: 'cat-sub';
+	src: url('/fonts/catamaran-light-webfont.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "fira-sub";
-	src: url("/fonts/firamono-regular-webfont.woff2") format("woff2");
+	font-family: 'fira-sub';
+	src: url('/fonts/firamono-regular-webfont.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "lato-bold-sub";
-	src: url("/fonts/lato-bold-webfont.woff") format("woff"),
-		url("/fonts/lato-bold-webfont.woff2") format("woff2");
+	font-family: 'lato-bold-sub';
+	src: url('/fonts/lato-bold-webfont.woff') format('woff'),
+		url('/fonts/lato-bold-webfont.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "lato-sub";
-	src: url("/fonts/lato-regular-webfont.woff") format("woff"),
-		url("/fonts/lato-regular-webfont.woff2") format("woff2");
+	font-family: 'lato-sub';
+	src: url('/fonts/lato-regular-webfont.woff') format('woff'),
+		url('/fonts/lato-regular-webfont.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "fira-full";
-	src: url("/fonts/firamono-regular-webfont.woff") format("woff"),
-		url("/fonts/firamono-regular-webfont2.woff2") format("woff2");
+	font-family: 'fira-full';
+	src: url('/fonts/firamono-regular-webfont.woff') format('woff'),
+		url('/fonts/firamono-regular-webfont2.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "roboto-thin-full";
-	src: url("/fonts/roboto-thin-webfont2.woff") format("woff"),
-		url("/fonts/roboto-thin-webfont2.woff2") format("woff2");
+	font-family: 'roboto-thin-full';
+	src: url('/fonts/roboto-thin-webfont2.woff') format('woff'),
+		url('/fonts/roboto-thin-webfont2.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "roboto-full";
-	src: url("/fonts/roboto-light-webfont.woff") format("woff"),
-		url("/fonts/roboto-light-webfont.woff2") format("woff2");
+	font-family: 'roboto-full';
+	src: url('/fonts/roboto-light-webfont.woff') format('woff'),
+		url('/fonts/roboto-light-webfont.woff2') format('woff2');
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "roboto-bold-full";
-	src: url("/fonts/roboto-bold-webfont.woff") format("woff"),
-		url("/fonts/roboto-bold-webfont.woff2") format("woff2");
+	font-family: 'roboto-bold-full';
+	src: url('/fonts/roboto-bold-webfont.woff') format('woff'),
+		url('/fonts/roboto-bold-webfont.woff2') format('woff2');
 	font-style: normal;
 }
 
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*='language-'],
+pre[class*='language-'] {
 	color: #ccc;
 	background: none;
-	font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
@@ -582,19 +581,19 @@ pre[class*="language-"] {
 	hyphens: none;
 }
 
-pre[class*="language-"] {
+pre[class*='language-'] {
 	/* padding: 1em;
 	margin: 0.5em 0; */
 	overflow: auto;
 	max-width: 100%;
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
 	background: #1f2430;
 }
 
-:not(pre) > code[class*="language-"] {
+:not(pre) > code[class*='language-'] {
 	padding: 0.1em;
 	border-radius: 0.3em;
 	white-space: normal;
@@ -684,7 +683,7 @@ pre[class*="language-"] {
 	cursor: help;
 }
 
-[class*="language-"] {
+[class*='language-'] {
 	color: #cbccc6;
 }
 
