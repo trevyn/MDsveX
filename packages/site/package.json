@@ -44,7 +44,6 @@
 		"sapper": "^0.27.8",
 		"svelte": "^3.31.2",
 		"svelte-json-tree": "^0.0.7",
-		"svelte-windicss-preprocess": "^1.0.9",
 		"typeface-catamaran": "^0.0.72",
 		"typeface-roboto": "^0.0.75",
 		"unist-util-visit": "^2.0.1"

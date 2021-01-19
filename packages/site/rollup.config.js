@@ -68,15 +68,7 @@ export default {
 				dev,
 				hydratable: true,
 				emitCss: true,
-				preprocess: [
-					mdsvex({ extension: '.svx' }),
-					require('svelte-windicss-preprocess').preprocess({
-						compile: true, // false: interpretation mode; true: compilation mode
-						globalPreflight: true, // set preflight style is global or scoped
-						globalUtility: true, // set utility style is global or scoped
-						prefix: 'windi-', // set compilation mode style prefix
-					}),
-				],
+				preprocess: mdsvex({ extension: '.svx' }),
 			}),
 			resolve({ preferBuiltins: false, browser: true }),
 			commonjs(),
