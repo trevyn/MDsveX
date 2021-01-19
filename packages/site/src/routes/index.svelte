@@ -1,71 +1,214 @@
 <script>
-  import { onMount } from "svelte";
-  import Input from "../components/Input.svelte";
-  import Output from "../components/Output.svelte";
+	import { onMount } from 'svelte';
+	import Repl from '../components/Repl/Repl.svelte';
+	import { code_1, code_2, code_3, code_4, code_5 } from './_source.js';
 
-  const _input = [
-    [
-      { color: "green", text: "#", l: 0 },
-      { color: "green", text: " mdsvex", l: 1 },
-    ],
-    [{ color: "grey", text: "svelte in markdown ", l: 0 }],
-    [
-      { color: "teal", text: "<", l: 0 },
-      { color: "blue", text: "Penguin", l: 1 },
-      { color: "teal", text: " />", l: 8 },
-    ],
-  ];
+	let repl;
+	let checked = 'input';
+	let width;
 
-  const _heading = "mdsvex";
-  const _paragraph = "svelte in markdown";
-  const _penguin = false;
+	$: is_mobile = width < 750;
 
-  let input = [];
-  let heading = { value: "", l: 2 };
-  let paragraph = { value: "", l: 0 };
-  let penguin = false;
-  let walk = false;
+	onMount(() => {
+		repl.set({
+			components: [
+				{
+					type: 'svx',
+					name: 'App',
+					source: code_1,
+				},
+				{
+					type: 'svelte',
+					name: 'My Awesome Card 1',
+					source: code_2,
+				},
+				{
+					type: 'svx',
+					name: 'My Awesome Card 2',
+					source: code_3,
+				},
+				{
+					type: 'svelte',
+					name: 'My Awesome Card 3',
+					source: code_4,
+				},
+				{
+					type: 'svelte',
+					name: 'My Awesome Card 4',
+					source: code_5,
+				},
+			],
+		});
+	});
 
-  const wait = (t) => new Promise((res) => setTimeout(res, t));
-
-  onMount(async () => {
-    await wait(1000);
-    input = [...input, _input[0]];
-    heading.value = _heading;
-    await wait(1000);
-    input = [...input, _input[1]];
-    paragraph.value = _paragraph;
-    await wait(2500);
-    input = [...input, _input[2]];
-    await wait(1100);
-    penguin = true;
-    await wait(100);
-    input[2] = [
-      input[2][0],
-      input[2][1],
-      { color: "yellow", text: " walk", l: 8 },
-      { color: "red", text: "=", l: 13 },
-      { color: "teal", text: "{", l: 14 },
-      { color: "orange", text: "true", l: 20 },
-      { color: "teal", text: "}", l: 15 },
-      { color: "teal", text: " />", l: 8 },
-    ];
-    await wait(3000);
-    walk = true;
-  });
+	function handle_select() {
+		checked = checked === 'input' ? 'output' : 'input';
+	}
 </script>
 
-<svelte:head>
-  <link
-    rel="preload"
-    as="font"
-    crossorigin
-    href="/fonts/roboto-thin-webfont.woff2" />
-  <title>mdsvex - markdown in svelte!</title>
+<style>
+	.outer {
+		position: absolute;
+		top: 80px;
+		left: 50px;
+		right: 50px;
+		bottom: 50px;
+		margin: auto;
+		border-radius: 5px;
+		overflow: hidden;
+		box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+	}
 
+	.inner {
+		height: 100%;
+		width: 100%;
+	}
+
+	.mobile .inner {
+		width: 200%;
+		height: calc(100% - 42px);
+		transition: transform 0.3s;
+	}
+
+	.mobile .offset {
+		transform: translate(-50%, 0);
+	}
+
+	.toggle-wrap {
+		display: flex;
+		position: absolute;
+		user-select: none;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 42px;
+		border-top: 1px solid var(--second);
+		overflow: hidden;
+	}
+
+	.toggle label {
+		margin: 0 0.5em 0;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.toggle input[type='radio'] {
+		display: inline-block;
+		margin-right: 0px;
+		width: 50%;
+		height: 0%;
+		opacity: 0;
+		position: relative;
+		z-index: 1;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.toggle-wrapper {
+		display: inline-block;
+		vertical-align: middle;
+		width: 40px;
+		height: 20px;
+		border-radius: 3.5em;
+		position: relative;
+		user-select: none;
+	}
+
+	.toggle-switcher {
+		display: block;
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		right: 100%;
+		width: calc(50% - 4px);
+		height: calc(100% - 4px);
+		border-radius: 50%;
+		background-color: #fff;
+		transition: all 0.1s ease-out;
+		z-index: 2;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.toggle-background {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		border-radius: 3.5em;
+		background-color: cadetblue;
+		transition: all 0.1s ease-out;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	#output:checked ~ .toggle-switcher {
+		right: 0;
+		left: calc(50% + 2px);
+	}
+
+	#input:checked ~ .toggle-background {
+		background-color: #333;
+	}
+
+	/* support Windows High Contrast Mode. Credit: Adrian Roselli https://twitter.com/aardrian/status/1021372139990134785 */
+
+	@media (max-width: 750px) {
+		.outer {
+			position: absolute;
+			top: 80px;
+			left: 20px;
+			right: 20px;
+			bottom: 20px;
+			margin: auto;
+			border-radius: 5px;
+			overflow: hidden;
+			box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+		}
+	}
+</style>
+
+<svelte:window bind:innerWidth={width} />
+<svelte:head>
+	<title>mdsvex playground!</title>
 </svelte:head>
 
-<main>
-  <Output {heading} {paragraph} {penguin} {walk} />
-  <Input {input} />
-</main>
+<!-- <div class="outer" class:mobile={is_mobile}> -->
+<div class="inner" class:offset={checked === 'output'}>
+	<Repl workersUrl="/workers" bind:this={repl} fixed={is_mobile} />
+</div>
+
+{#if is_mobile}
+	<div class="toggle-wrap">
+		<div class="toggle">
+			<label for="input">input</label>
+			<span class="toggle-wrapper">
+				<input
+					type="radio"
+					name="theme"
+					id="input"
+					bind:group={checked}
+					value="input" />
+				<input
+					type="radio"
+					name="theme"
+					id="output"
+					bind:group={checked}
+					value="output" />
+				<span
+					aria-hidden="true"
+					class="toggle-background"
+					on:click={handle_select} />
+				<span
+					aria-hidden="true"
+					class="toggle-switcher"
+					on:click={handle_select} />
+			</span>
+			<label for="output">output</label>
+		</div>
+	</div>
+{/if}
+<!-- </div> -->
