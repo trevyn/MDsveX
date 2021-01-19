@@ -1,54 +1,52 @@
 import 'prismjs';
-import "prism-svelte";
-import "./prism/svx.js";
+import 'prism-svelte';
+import './prism/svx.js';
 
+import resolve from 'rollup-plugin-node-resolve';
+import replace from 'rollup-plugin-replace';
+import commonjs from 'rollup-plugin-commonjs';
+import svelte from 'rollup-plugin-svelte';
+import babel from 'rollup-plugin-babel';
+import { terser } from 'rollup-plugin-terser';
+import config from 'sapper/config/rollup.js';
+import pkg from './package.json';
 
+import slug from 'rehype-slug';
+import link from 'rehype-autolink-headings';
 
-import resolve from "rollup-plugin-node-resolve";
-import replace from "rollup-plugin-replace";
-import commonjs from "rollup-plugin-commonjs";
-import svelte from "rollup-plugin-svelte";
-import babel from "rollup-plugin-babel";
-import { terser } from "rollup-plugin-terser";
-import config from "sapper/config/rollup.js";
-import pkg from "./package.json";
+import { highlight, highlighter } from './prism/prism.js';
 
-import slug from "rehype-slug";
-import link from "rehype-autolink-headings";
-
-import { highlight, highlighter } from "./prism/prism.js";
-
-import { extname } from "path";
+import { extname } from 'path';
 
 const mode = process.env.NODE_ENV;
-const dev = mode === "development";
+const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
-import { mdsvex } from "mdsvex";
+import { mdsvex } from 'mdsvex';
 
 function mdsvex_transform() {
 	return {
 		async transform(code, id) {
-			if (extname(id) !== ".svtext") return;
+			if (extname(id) !== '.svtext') return;
 
 			const c = (
 				await mdsvex({
 					highlight: {
 						alias: {
-							ts: "typescript",
-							mdx: "markdown",
-							svelte: "svelte",
-							svx: "svx",
-							mdsvex: "svx",
-							sig: "ts",
-						}
+							ts: 'typescript',
+							mdx: 'markdown',
+							svelte: 'svelte',
+							svx: 'svx',
+							mdsvex: 'svx',
+							sig: 'ts',
+						},
 					},
 					extension: '.svtext',
-					rehypePlugins: [slug, link]
+					rehypePlugins: [slug, link],
 				}).markup({ content: code, filename: id })
 			).code;
-			return `export default \`${c.replace(/`/g, "\\`").trim()}\`;`;
-		}
+			return `export default \`${c.replace(/`/g, '\\`').trim()}\`;`;
+		},
 	};
 }
 
@@ -57,53 +55,61 @@ export default {
 		input: config.client.input(),
 		output: config.client.output(),
 		globals: {
-			global: "window"
+			global: 'window',
 		},
 		plugins: [
 			replace({
-				"process.browser": true,
-				"process.env.NODE_ENV": JSON.stringify(mode)
+				'process.browser': true,
+				'process.env.NODE_ENV': JSON.stringify(mode),
 			}),
 			mdsvex_transform(),
 			svelte({
-				extensions: [".svelte", ".svx"],
+				extensions: ['.svelte', '.svx'],
 				dev,
 				hydratable: true,
 				emitCss: true,
-				preprocess: mdsvex({ extension: '.svx' })
+				preprocess: [
+					mdsvex({ extension: '.svx' }),
+					require('svelte-windicss-preprocess').preprocess({
+						compile: true, // false: interpretation mode; true: compilation mode
+						globalPreflight: true, // set preflight style is global or scoped
+						globalUtility: true, // set utility style is global or scoped
+						prefix: 'windi-', // set compilation mode style prefix
+					}),
+				],
 			}),
 			resolve({ preferBuiltins: false, browser: true }),
 			commonjs(),
 
 			legacy &&
 				babel({
-					extensions: [".js", ".mjs", ".html", ".svelte"],
+					extensions: ['.js', '.mjs', '.html', '.svelte'],
 					runtimeHelpers: true,
-					exclude: ["node_modules/@babel/**"],
+					exclude: ['node_modules/@babel/**'],
 					presets: [
 						[
-							"@babel/preset-env",
+							'@babel/preset-env',
 							{
-								targets: "> 0.25%, not dead"
-							}
-						]
+								targets: '> 0.25%, not dead',
+							},
+						],
 					],
 					plugins: [
-						"@babel/plugin-syntax-dynamic-import",
+						'@babel/plugin-syntax-dynamic-import',
 						[
-							"@babel/plugin-transform-runtime",
+							'@babel/plugin-transform-runtime',
 							{
-								useESModules: true
-							}
-						]
-					]
+								useESModules: true,
+							},
+						],
+					],
 				}),
 
 			!dev &&
 				terser({
-					module: true
-				})
-		]
+					module: true,
+				}),
+		],
 	},
 
 	server: {
@@ -111,23 +117,23 @@ export default {
 		output: config.server.output(),
 		plugins: [
 			replace({
-				"process.browser": false,
-				"process.env.NODE_ENV": JSON.stringify(mode)
+				'process.browser': false,
+				'process.env.NODE_ENV': JSON.stringify(mode),
 			}),
 			mdsvex_transform(),
 			svelte({
-				extensions: [".svelte", ".svx"],
-				generate: "ssr",
+				extensions: ['.svelte', '.svx'],
+				generate: 'ssr',
 				dev,
-				preprocess: mdsvex({ extension: '.svx' })
+				preprocess: mdsvex({ extension: '.svx' }),
 			}),
 			resolve({ browser: true }),
-			commonjs()
+			commonjs(),
 		],
 		external: Object.keys(pkg.dependencies).concat(
-			require("module").builtinModules ||
-				Object.keys(process.binding("natives"))
-		)
+			require('module').builtinModules ||
+				Object.keys(process.binding('natives'))
+		),
 	},
 
 	serviceworker: {
@@ -136,11 +142,11 @@ export default {
 		plugins: [
 			resolve(),
 			replace({
-				"process.browser": true,
-				"process.env.NODE_ENV": JSON.stringify(mode)
+				'process.browser': true,
+				'process.env.NODE_ENV': JSON.stringify(mode),
 			}),
 			commonjs(),
-			!dev && terser()
-		]
-	}
+			!dev && terser(),
+		],
+	},
 };
