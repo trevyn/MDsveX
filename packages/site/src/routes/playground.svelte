@@ -14,27 +14,27 @@
 			components: [
 				{
 					type: 'svx',
-					name: 'App',
+					name: 'Home',
 					source: code_1,
 				},
 				{
 					type: 'svelte',
-					name: 'Boinger',
+					name: 'My Awesome Card 1',
 					source: code_2,
 				},
 				{
 					type: 'svx',
-					name: 'Section',
+					name: 'My Awesome Card 2',
 					source: code_3,
 				},
 				{
 					type: 'svelte',
-					name: 'Count',
+					name: 'My Awesome Card 3',
 					source: code_4,
 				},
 				{
 					type: 'svelte',
-					name: 'Seriously',
+					name: 'My Awesome Card 4',
 					source: code_5,
 				},
 			],

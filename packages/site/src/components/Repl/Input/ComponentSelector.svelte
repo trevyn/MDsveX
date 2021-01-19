@@ -261,7 +261,7 @@
               class="editable"
               title="edit component name"
               on:click={() => editTab(component)}>
-              {component.name}.{component.type}
+              {component.name}
             </div>
 
             {#if !funky}
