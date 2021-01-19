@@ -3,6 +3,7 @@
 	"description": "Documentation side for mdsvex",
 	"version": "0.0.1",
 	"scripts": {
+		"build:tailwind": "npx tailwindcss build tailwind.css -o static/tailwind.output.css",
 		"dev": "sapper dev --ext '.svelte .svx'",
 		"build:site": "sapper build --legacy --ext '.svelte .svx'",
 		"export": "sapper export --legacy --ext '.svelte .svx'",
@@ -14,11 +15,16 @@
 	},
 	"private": "true",
 	"dependencies": {
+		"@tailwindcss/aspect-ratio": "^0.2.0",
+		"@tailwindcss/forms": "^0.2.1",
+		"@tailwindcss/typography": "^0.4.0",
+		"autoprefixer": "^10.2.1",
 		"compression": "^1.7.1",
 		"mdsvex": "^0.7.1-beta.3",
 		"polka": "^0.5.0",
 		"refractor": "^2.10.0",
 		"sirv": "^0.4.0",
+		"tailwindcss": "^2.0.2",
 		"yootils": "^0.0.15"
 	},
 	"devDependencies": {
