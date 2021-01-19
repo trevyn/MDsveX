@@ -3,7 +3,7 @@
 	"description": "Documentation side for mdsvex",
 	"version": "0.0.1",
 	"scripts": {
-		"build:tailwind": "npx tailwindcss build tailwind.css -o static/tailwind.output.css",
+		"build:tailwind": "npx tailwindcss build tailwind.css -c tailwind.config.js -o static/tailwind.output.css",
 		"dev": "sapper dev --ext '.svelte .svx'",
 		"build:site": "sapper build --legacy --ext '.svelte .svx'",
 		"export": "sapper export --legacy --ext '.svelte .svx'",
