@@ -14,18 +14,23 @@ export default class Compiler {
 
 		this.handlers = new Map();
 
-		this.worker.addEventListener('message', event => {
+		this.worker.addEventListener('message', (event) => {
 			const handler = this.handlers.get(event.data.id);
 
-			if (handler) { // if no handler, was meant for a different REPL
+			console.log('things1', event.data);
+
+			if (handler) {
+				// if no handler, was meant for a different REPL
 				handler(event.data.result);
 				this.handlers.delete(event.data.id);
 			}
+
+			console.log('handler complete', event.data);
 		});
 	}
 
 	compile(component, options) {
-		return new Promise(fulfil => {
+		return new Promise((fulfil) => {
 			const id = uid++;
 
 			this.handlers.set(id, fulfil);
@@ -34,11 +39,14 @@ export default class Compiler {
 				id,
 				type: 'compile',
 				source: component.source,
-				options: Object.assign({
-					name: component.name,
-					filename: `${component.name}.svelte`
-				}, options),
-				entry: component.name === 'App'
+				options: Object.assign(
+					{
+						name: component.name,
+						filename: `${component.name}.svelte`,
+					},
+					options
+				),
+				entry: component.name === 'App',
 			});
 		});
 	}

@@ -14,25 +14,32 @@ export default {
 
 		try {
 			const ast = acorn.parse(code, {
-				ecmaVersion: 9
+				ecmaVersion: 9,
 			});
 
 			const requires = [];
 
 			walk(ast, {
-				enter: node => {
-					if (node.type === 'CallExpression' && node.callee.name === 'require') {
+				enter: (node) => {
+					if (
+						node.type === 'CallExpression' &&
+						node.callee.name === 'require'
+					) {
 						if (node.arguments.length !== 1) return;
 						const arg = node.arguments[0];
 						if (arg.type !== 'Literal' || typeof arg.value !== 'string') return;
 
 						requires.push(arg.value);
 					}
-				}
+				},
 			});
 
-			const imports = requires.map((id, i) => `import __repl_${i} from '${id}';`).join('\n');
-			const lookup = `const __repl_lookup = { ${requires.map((id, i) => `'${id}': __repl_${i}`).join(', ')} };`;
+			const imports = requires
+				.map((id, i) => `import __repl_${i} from '${id}';`)
+				.join('\n');
+			const lookup = `const __repl_lookup = { ${requires
+				.map((id, i) => `'${id}': __repl_${i}`)
+				.join(', ')} };`;
 
 			const transformed = [
 				imports,
@@ -40,15 +47,15 @@ export default {
 				require,
 				`const exports = {}; const module = { exports };`,
 				code,
-				`export default module.exports;`
+				`export default module.exports;`,
 			].join('\n\n');
 
 			return {
 				code: transformed,
-				map: null
+				map: null,
 			};
 		} catch (err) {
 			return null;
 		}
-	}
+	},
 };
